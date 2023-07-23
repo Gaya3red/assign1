@@ -1,0 +1,301 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner s = new Scanner(System.in);
+        int in=s.nextInt();
+        int arr[]=new int[in];
+        int sum=0;
+        int c=0;
+        for (int i=0;i<in;i++){
+            arr[i]=s.nextInt();
+        }
+        for (int i=0;i<in;i++){
+            for (int j=i;j<in;j++){
+                for (int k=i;k<=j;k++){
+                    sum = sum+arr[k];           
+                }    
+                if(sum<0){
+                    c++;
+                }
+                sum=0;
+            }
+        }
+        System.out.print(c);
+    }
+}
+
+
+
+-----------------------------------------
+class Solution {
+    public String longestPalindrome(String s) {
+       int start = 0, end = 0;
+       for(int i = 0; i < s.length(); i ++) {
+           char c = s.charAt(i);
+           int left = i;
+           int right = i;
+           while(left >= 0 && s.charAt(left) == c) left --;
+           while(right < s.length() && s.charAt(right) == c) right ++;
+           while(left >= 0 && right < s.length()) {
+               if(s.charAt(left) != s.charAt(right)) break;
+               left --;
+               right ++;
+           }
+           left += 1;
+           if(end - start < right - left) {
+               start = left;
+               end = right;
+           }
+       } 
+       return s.substring(start, end);
+    }
+}
+
+
+-------------------------------------
+import java.io.; import java.util.;
+
+public class Solution {
+
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+
+    while(sc.hasNext()){
+    String s = sc.next();
+    System.out.println(valid(s));
+
+    }
+
+}
+
+public static boolean valid(String s){
+    Stack <Character> st = new Stack<>();
+    int i=0;
+    while(i<s.length()){
+        if(s.charAt(i)=='{'|| s.charAt(i)=='('|| s.charAt(i)=='['){
+            st.push(s.charAt(i));
+        }
+        else{
+            if(st.isEmpty()){
+                return false;
+            }
+            else{
+                if((st.peek()=='{'&& s.charAt(i)=='}')||(st.peek()=='['&& s.charAt(i)==']')|| (st.peek()=='('&& s.charAt(i)==')')){
+                    st.pop();
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        i++;
+    }
+    return st.isEmpty();
+}
+}
+--------------------------------------------
+
+
+    import java.util.*;
+    public class test {
+        public static void main(String[] args) {
+            Scanner in = new Scanner(System.in);
+            Deque deque = new ArrayDeque<>();
+           ArrayList<Integer> a=new ArrayList<>();
+            int n = in.nextInt();
+            int m = in.nextInt();
+
+            for (int i = 0; i < n; i++) {
+                int num = in.nextInt();
+                a.add(num);
+            }
+            
+           
+            int max=0;
+            for(int i=0;i<n-m+1;i++)
+            {int count=0;
+                for(int j=i;j<i+m;j++)
+                {
+                    if(!deque.contains(a.get(j)))
+                    {
+                        deque.offerLast(a.get(j));
+                        count++;
+                    }
+                }
+                if(count>max)
+                {
+                    max=count;
+                }
+                
+                deque.removeAll(deque);
+            }
+            System.out.println(max);
+            
+            
+            
+        }
+                
+    }
+-------------------------------------
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Integer num = Integer.parseInt(sc.nextLine());
+        PriorityQueue<Student> students = new PriorityQueue<Student>(num, new StComparator());
+        String op;
+        for(int i=0;i<num;i++){
+            op = sc.next();
+            if(op.equals("ENTER")){
+                students.add(new Student(sc.next(), sc.nextDouble(),sc.nextInt()));
+                if(sc.hasNextLine()){
+                    sc.nextLine();
+                }
+            }
+            else if(op.equals("SERVED")){
+                students.poll();
+            }
+        }
+        
+        if(students.isEmpty()){
+            System.out.println("EMPTY");
+        }
+        else{
+            while (!students.isEmpty()) {
+                System.out.println(students.poll().getName());
+            }
+        }
+    }
+}
+class Student{
+    private int id;
+    private String name;
+    private double cgpa;
+    
+    public Student(String name, double cgpa, int id){
+        this.id = id;
+        this.name = name;
+        this.cgpa = cgpa;
+    }
+    
+    public int getID(){
+        return this.id;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public double getCGPA(){
+        return this.cgpa;
+    }
+}
+
+class StComparator implements Comparator<Student>{
+    
+    public int compare(Student a, Student b){
+        if(a.getCGPA() < b.getCGPA()){
+            return 1;
+        }
+        else if(a.getCGPA() > b.getCGPA()){
+            return -1;
+        }
+        else{
+            if(a.getName().compareTo(b.getName()) < 0){
+                return -1;
+            }
+            else if(a.getName().compareTo(b.getName()) > 0){
+                return 1;
+            }
+            else{
+                if(a.getID() < b.getID()){
+                    return -1;
+                }
+                else{
+                    return 1;
+                }
+                
+            }
+        }
+    }
+}
+-------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+         if (head == null || head.next == null) {
+        return head;
+    }
+    
+    // Store the next node for recursion
+    ListNode nextNode = head.next;
+    
+    // Swap the current node and the next node
+    head.next = swapPairs(nextNode.next);
+    nextNode.next = head;
+    
+    // Return the new head (nextNode becomes the head after swapping)
+    return nextNode;
+    }
+}
+----------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+
+    ListNode pre = dummy, cur = dummy, nex = dummy;
+    int count = 0;
+
+    while(cur.next != null){
+        count++;
+        cur = cur.next;
+    }
+
+    while(count >= k){
+        cur = pre.next;
+        nex = cur.next;
+        for(int i=1; i < k; i++){
+            cur.next = nex.next;
+            nex.next = pre.next;
+            pre.next = nex;
+            nex = cur.next;
+        }
+        pre = cur;
+        count -= k;
+    }
+      return dummy.next;
+    }
+}
+
